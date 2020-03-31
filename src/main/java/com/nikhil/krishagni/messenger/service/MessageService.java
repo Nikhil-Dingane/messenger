@@ -9,14 +9,14 @@ import com.nikhil.krishagni.messenger.model.Message;
 
 public class MessageService {
 	
-	
+	private Map<Long,Message> messages=DatabaseClass.getMessages();
 	
 	public MessageService() {
 		messages.put(1L, new Message(1,"this is the first message","nikhil"));
 		messages.put(2L, new Message(2,"this is the second message","nikhil"));
 	}
 
-	private Map<Long,Message> messages=DatabaseClass.getMessages();
+	
 
 	public List<Message> getAllMessages(){
 		

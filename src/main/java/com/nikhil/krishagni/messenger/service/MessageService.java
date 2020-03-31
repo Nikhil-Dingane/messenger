@@ -1,6 +1,7 @@
 package com.nikhil.krishagni.messenger.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,33 @@ public class MessageService {
 		messages.put(2L, new Message(2,"this is the second message","nikhil"));
 	}
 
+	public List<Message> getAllMessagesForYear(int year)
+	{
+		List<Message> messagesForYear=new ArrayList<>();
+		Calendar cal=Calendar.getInstance();
+		for(Message message:messages.values())
+		{
+			cal.setTime(message.getCreated());
+			if(cal.get(Calendar.YEAR)==year)
+			{
+				messagesForYear.add(message);
+			}
+		}
+		return messagesForYear;
+	}
 	
+	public List<Message> getAllMessagesPaginated(int start,int size)
+	{
+		ArrayList<Message> list=new ArrayList<Message>(messages.values());
+		if(start+size>list.size())
+		{
+			return null;
+		}
+		else
+		{
+			return list.subList(start, start+size);
+		}
+	}
 
 	public List<Message> getAllMessages(){
 		

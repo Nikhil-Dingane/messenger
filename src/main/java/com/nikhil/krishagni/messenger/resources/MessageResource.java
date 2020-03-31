@@ -10,6 +10,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.nikhil.krishagni.messenger.model.Message;
@@ -21,9 +22,17 @@ public class MessageResource {
 	MessageService messageService=new MessageService();
 	
 	@GET
-	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	public List<Message> getMessages()
+	@Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
+	public List<Message> getMessages(@QueryParam("year") int year,@QueryParam("start") int start,@QueryParam("size") int size)
 	{
+		if(year>0)
+		{
+			return messageService.getAllMessagesForYear(year);
+		}
+		if((start>=0)&&(size>0))
+		{
+			return messageService.getAllMessagesPaginated(start, size);
+		}
 		return messageService.getAllMessages();
 	}
 	

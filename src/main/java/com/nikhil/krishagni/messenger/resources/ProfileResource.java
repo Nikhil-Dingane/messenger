@@ -13,7 +13,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.nikhil.krishagni.messenger.model.Profile;
-import com.nikhil.krishagni.messenger.service.MessageService;
 import com.nikhil.krishagni.messenger.service.ProfileService;
 
 @Path("/profiles")

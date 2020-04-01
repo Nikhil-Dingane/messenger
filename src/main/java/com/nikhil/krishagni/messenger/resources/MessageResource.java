@@ -12,6 +12,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import com.nikhil.krishagni.messenger.model.Message;
 import com.nikhil.krishagni.messenger.service.MessageService;
@@ -27,13 +29,17 @@ public class MessageResource {
 	{
 		if(year>0)
 		{
+			//Response.status(Status.CREATED).entity(messageService.getAllMessagesForYear(year)).build();
 			return messageService.getAllMessagesForYear(year);
 		}
 		if((start>=0)&&(size>0))
 		{
+			//Response.status(Status.CREATED).entity(messageService.getAllMessagesPaginated(start,size)).build();
 			return messageService.getAllMessagesPaginated(start, size);
 		}
+		
 		return messageService.getAllMessages();
+		//return Response.status(Status.CREATED).entity(messageService.getAllMessages()).build();
 	}
 	
 	@POST
@@ -67,10 +73,11 @@ public class MessageResource {
     @GET
     @Path("/{messageId}")
     @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
-    public Message getMessage(@PathParam("messageId") long messageId)  {
+    public Response getMessage(@PathParam("messageId") long messageId)  {
      // We can how use the profileId value to retrieve the record
     	
-    	return messageService.getMessage(messageId);
+    	//return messageService.getMessage(messageId);
+    	return Response.status(Status.CREATED).entity(messageService.getMessage(messageId)).build();
     }
     
     @Path("/{messageId}/comments")

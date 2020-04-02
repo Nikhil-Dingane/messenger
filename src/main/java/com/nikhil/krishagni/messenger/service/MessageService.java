@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nikhil.krishagni.messenger.database.DatabaseClass;
+import com.nikhil.krishagni.messenger.exception.DataNotFoundException;
 import com.nikhil.krishagni.messenger.model.Message;
 
 public class MessageService {
@@ -74,6 +75,11 @@ public class MessageService {
 	
 	public Message getMessage(long id)
 	{
-		return messages.get(id);
+		Message message= messages.get(id);
+		if(message==null)
+		{
+			throw new DataNotFoundException("Message with the id "+id+" not found");
+		}
+		return message;
 	}
 }

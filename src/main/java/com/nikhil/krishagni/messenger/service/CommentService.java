@@ -5,8 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
 import com.nikhil.krishagni.messenger.database.*;
 import com.nikhil.krishagni.messenger.model.Comment;
+import com.nikhil.krishagni.messenger.model.ErrorMessage;
 import com.nikhil.krishagni.messenger.model.Message;
 
 public class CommentService {
@@ -27,8 +32,19 @@ public class CommentService {
 	
 	public Comment getComment(long messageId,long commentId)
 	{
-		Map<Long,Comment> comments=messages.get(messageId).getComments();
-		return comments.get(commentId);
+		ErrorMessage errorMessage=new ErrorMessage("Not Found",404,"http://localhost:8080/messenger");
+		Message message=messages.get(messageId);
+		if(message==null)
+		{
+			throw new WebApplicationException(Response.status(Status.NOT_FOUND).entity(errorMessage).build());
+		}
+		Map<Long,Comment> comments=message.getComments();
+		Comment comment= comments.get(commentId);
+		if(comment==null)
+		{
+			throw new WebApplicationException(Response.status(Status.NOT_FOUND).entity(errorMessage).build());
+		}
+		return comment;
 	}
 	
 	public Comment addComment(long messageId,Comment comment)

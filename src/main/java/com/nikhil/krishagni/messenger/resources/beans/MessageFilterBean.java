@@ -5,6 +5,5 @@ import javax.ws.rs.MatrixParam;
 
 public class MessageFilterBean {
 
-	@MatrixParam("param") String matrixParam,
-	@HeaderParam("customContentHeader") String header 	
+		
 }
